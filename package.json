@@ -1,0 +1,11 @@
+{
+  "name": "fullstack-starter",
+  "version": "0.1.0",
+  "author": "0neSe7en <siyuan.se7en@gmail.com>",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "www:dev": "yarn workspace www dev",
+    "server:dev": "yarn workspace server dev"
+  }
+}
