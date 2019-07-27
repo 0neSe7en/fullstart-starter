@@ -2,6 +2,7 @@ import * as Koa from 'koa'
 import * as kBodyParser from 'koa-bodyparser'
 import * as morgan from 'koa-morgan'
 import routes from './routes'
+import './models'
 
 const cors = require('@koa/cors')
 const app = new Koa()

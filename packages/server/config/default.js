@@ -1,10 +1,10 @@
 module.exports = {
-  port: 3000,
+  port: 3001,
   mongo: {
     options: {
       useNewUrlParser: true,
       config: {
-        autoIndex: false,
+        autoIndex: true,
       },
     },
 		url: 'mongodb://localhost/test',

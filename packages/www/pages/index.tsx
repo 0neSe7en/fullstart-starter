@@ -1,11 +1,10 @@
-import Header from '../src/layouts/header'
-import * as React from "react"
+import React from 'react'
+import { SampleComponent } from '../src/components/SampleComponent'
 
-const Home = () => (
-  <>
-    <Header />
-    <h1>Hello World!</h1>
-  </>
-)
+class IndexPage extends React.Component {
+  public render() {
+    return <SampleComponent title={'Index Page'} linkTo="/other" />
+  }
+}
 
-export default Home
+export default IndexPage

@@ -9,12 +9,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@blueprintjs/core": "^3.17.1",
+    "@rebass/grid": "^6.0.0",
+    "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
+    "axios": "^0.19.0",
     "lodash": "^4.17.14",
-    "mobx": "^5.11.0",
+    "mobx": "^5.13.0",
     "mobx-react": "^6.1.1",
-    "mobx-state-tree": "^3.14.0",
+    "mobx-state-tree": "^3.14.1",
     "next": "^9.0.0",
+    "next-offline": "^4.0.2",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -23,8 +28,10 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.0",
     "@babel/plugin-proposal-decorators": "^7.4.4",
-    "@types/node": "^12.6.2",
-    "@types/react-dom": "^16.8.4",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.5",
+    "@types/rebass__grid": "^6.0.5",
+    "@types/styled-components": "^4.1.18",
     "typescript": "^3.5.3"
   }
 }

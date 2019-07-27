@@ -17,9 +17,12 @@
     "@types/koa-compress": "^2.0.9",
     "@types/koa-morgan": "^1.0.4",
     "@types/koa-router": "^7.0.42",
+    "@types/lodash": "^4.14.136",
     "@types/mongoose": "^5.5.8",
+    "@types/nanoid": "^2.0.0",
     "@types/node": "^12.6.3",
     "@types/supertest": "^2.0.8",
+    "@types/validator": "^10.11.2",
     "concurrently": "^4.1.1",
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",
@@ -39,7 +42,9 @@
     "koa-compress": "^3.0.0",
     "koa-morgan": "^1.0.1",
     "koa-router": "^7.4.0",
-    "lodash": "^4.17.14",
-    "mongoose": "^5.6.5"
+    "lodash": "^4.17.15",
+    "mongoose": "^5.6.5",
+    "nanoid": "^2.0.3",
+    "validator": "^11.1.0"
   }
 }
