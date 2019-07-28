@@ -1,7 +1,7 @@
 import * as React from "react"
 import Head from 'next/head'
 
-export default ({title = 'My App'}) => (
+export default ({title = 'My Webapp'}) => (
 	<Head>
 		<title>{title}</title>
 		<meta charSet='utf-8'/>

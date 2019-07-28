@@ -4,6 +4,7 @@ import App, { Container } from 'next/app'
 import React from 'react'
 import { initializeStore, IStore } from '../src/models/store'
 import '../styles/app.scss'
+import { checkServer } from "../src/utils"
 
 interface IOwnProps {
   isServer: boolean
@@ -11,24 +12,21 @@ interface IOwnProps {
 }
 
 class MyApp extends App {
-  public static async getInitialProps({ Component, router, ctx }) {
+  public static async getInitialProps({ Component, router, ctx, res }) {
     //
     // Use getInitialProps as a step in the lifecycle when
     // we can initialize our store
     //
-    const isServer = typeof window === 'undefined'
-    const store = initializeStore(isServer)
-    //
-    // Check whether the page being rendered by the App has a
-    // static getInitialProps method and if so call it
-    //
+    const store = initializeStore(checkServer())
+
     let pageProps = {}
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
+
     return {
       initialState: getSnapshot(store),
-      isServer,
+      isServer: checkServer(),
       pageProps,
     }
   }

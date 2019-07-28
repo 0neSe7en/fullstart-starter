@@ -9,6 +9,10 @@ module.exports = {
     },
 		url: 'mongodb://localhost/test',
   },
+	auth: {
+		secret: 'localserver',
+		cookieName: 'hack-2019:sess:auth_token'
+	},
   redis: {
     options: {
       keyPrefix: 'prefix:',

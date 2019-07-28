@@ -1,66 +1,69 @@
 import {
 	applySnapshot, flow,
 	Instance,
-	SnapshotIn,
-	SnapshotOut,
 	types,
 } from 'mobx-state-tree'
-import axios from 'axios'
+import api, { removeToken, setToken } from './api'
+import { TodoStore } from "./todoStore"
+import Router from "next/router"
 
-axios.defaults.baseURL = 'http://localhost:3001/api'
-
-let store: IStore = null as any
+export let store: IStore = null as any
 
 const User = types.model({
-	email: types.string
+	email: types.string,
+	id: types.string,
 })
 
+const Store = types.model({
+	currentUser: types.maybe(User),
+	authToken: types.maybe(types.string),
+	todos: TodoStore,
+}).actions(self => {
+	const updateToken = (token) => {
+		self.authToken = token
+		setToken(token)
+	}
 
-const Store = types
-	.model({
-		foo: types.number,
-		lastUpdate: types.Date,
-		light: false,
-		user: types.maybe(User),
-	})
-	.actions(self => {
-		const login = flow(function *login(email: string, password: string) {
-			const res = yield axios.post('/login', { email, password })
-			console.log('login success?', res.data)
-			return res.data
-		})
-
-
-		let timer
-		const start = () => {
-			timer = setInterval(() => {
-				// mobx-state-tree doesn't allow anonymous callbacks changing data.
-				// Pass off to another action instead (need to cast self as any
-				// because typescript doesn't yet know about the actions we're
-				// adding to self here)
-				(self as any).update()
-			}, 1000)
+	const login = flow(function *login(email: string, password: string) {
+		const res = yield api.post('/login', { email, password })
+		if (res.data && res.data.isValid) {
+			self.currentUser = res.data.user
+			updateToken(res.data.token)
 		}
-		const update = () => {
-			self.lastUpdate = new Date(Date.now())
-			self.light = true
-		}
-		const stop = () => {
-			clearInterval(timer)
-		}
-		return { start, stop, update, login }
+		yield Router.push('/webapp')
 	})
 
-export type IStore = Instance<typeof Store>
-export type IStoreSnapshotIn = SnapshotIn<typeof Store>
-export type IStoreSnapshotOut = SnapshotOut<typeof Store>
+	const userProfile = flow(function *userProfile() {
+		const res = yield api.get('/users')
+		self.currentUser = {
+			id: res.data.id,
+			email: res.data.email,
+		}
+	})
+
+	const logout = flow(function *logout() {
+		removeToken()
+		yield api.get('/logout')
+		self.currentUser = undefined
+		self.authToken = undefined
+		Router.push('/login')
+	})
+
+	return { login, userProfile, logout, updateToken }
+})
+
+export interface IStore extends Instance<typeof Store> {}
+
+const emptyDefaultStore = {
+	todos: {}
+}
 
 export const initializeStore = (isServer, snapshot = null) => {
 	if (isServer) {
-		store = Store.create({ foo: 6, lastUpdate: Date.now(), light: false })
+		store = Store.create(emptyDefaultStore)
 	}
 	if ((store as any) === null) {
-		store = Store.create({ foo: 6, lastUpdate: Date.now(), light: false })
+		store = Store.create(emptyDefaultStore)
 	}
 	if (snapshot) {
 		applySnapshot(store, snapshot)

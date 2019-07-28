@@ -16,13 +16,19 @@ const Login: React.FunctionComponent<{store: IStore}> = ({ store }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, isLoading] = useState(false)
+	const [isError, setError] = useState(false)
 
 	const handleSubmit = async (evt) => {
 		evt.preventDefault();
 		isLoading(true)
-		const res = await store.login(email, password)
-		console.log('login:', res)
-		isLoading(false)
+		try {
+			await store.login(email, password)
+		} catch (err) {
+			console.error(err)
+			setError(true)
+		} finally {
+			isLoading(false)
+		}
 	}
 
 	return (
@@ -35,10 +41,12 @@ const Login: React.FunctionComponent<{store: IStore}> = ({ store }) => {
 					<InputGroup id="email" type="email" onChange={e => setEmail(e.target.value)} />
 				</FormGroup>
 				<FormGroup
+					intent={isError ? 'danger' : 'none'}
+					helperText={isError ? 'Wrong Password or Email' : undefined}
 					label="Password"
 					labelFor="password"
 				>
-					<InputGroup id="password" type="password" onChange={e => setEmail(e.target.value)}/>
+					<InputGroup id="password" type="password" onChange={e => setPassword(e.target.value)}/>
 				</FormGroup>
 				<Button loading={loading} onClick={handleSubmit}>Login</Button>
 			</Wrap>

@@ -36,14 +36,16 @@ export async function createUser(email: string, password: string): Promise<IUser
 	return u.save()
 }
 
-export async function verifyPassowrd(email: string, passwordInput: string): Promise<boolean> {
+export async function verifyPassowrd(email: string, passwordInput: string): Promise<{isValid: boolean, user?: IUserDoc}> {
 	const u = await User.findOne({email})
 	if (u) {
 		const p = _sha512Encrypt(passwordInput, u.salt)
-		return p === passwordInput
-	} else {
-		return false
+		const isValid = p === u.password
+		if (isValid) {
+			return { isValid, user: u }
+		}
 	}
+	return { isValid: false }
 }
 
 export const User = model<IUserDoc>('User', userSchema)

@@ -19,4 +19,11 @@ export interface IUser extends ICommon {
 	}
 }
 
+export interface ITodo extends ICommon {
+	text: string
+	completed: boolean
+	author: IUserDoc['id']
+}
+
 export interface IUserDoc extends Document, IUser { id: string }
+export interface ITodoDoc extends Document, ITodo { id: string }

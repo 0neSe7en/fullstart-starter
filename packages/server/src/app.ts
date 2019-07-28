@@ -22,7 +22,7 @@ app
     }
     return next()
   })
-	.use(cors())
+	.use(cors({ credentials: true }))
 	.use(morgan(`:method :status :response-time :url`))
 	.use(routes.routes())
 
