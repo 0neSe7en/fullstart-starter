@@ -15,7 +15,7 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.21",
     "mobx": "^5.13.0",
     "mobx-react": "^6.1.1",
     "mobx-state-tree": "^3.14.1",
