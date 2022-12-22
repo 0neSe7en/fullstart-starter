@@ -39,7 +39,7 @@
     "@koa/cors": "2",
     "@types/config": "^0.0.34",
     "config": "^3.2.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-compress": "^3.0.0",
